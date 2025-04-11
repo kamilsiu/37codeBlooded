@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anonymous Messages</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 1em;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffcc00;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #004080;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .message {
+      background-color: white;
+      border-left: 5px solid #1ABC9C;
+      padding: 20px;
+      margin-bottom: 24px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .message:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .timestamp {
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    footer {
+      background-color: #ffffff;
+      color: #004080;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      border-top: 1px solid #ddd;
+      margin-top: 60px;
+    }
+
+    footer a {
+      color: #1ABC9C;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  
+</head>
+<body>
+  <header>
+    <div class="logo">Government Portal</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/resolved">Resolved</a>
+      <a href="/emails">Emails</a>
+      <a href="#status">Status</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Anonymous Messages</h1>
+    <div id="message-container">
+      <!-- Messages will appear here -->
+    </div>
+  </main>
+
+  <footer>
+    <p>Contact us: <a href="mailto:info@govportal.example">info@govportal.example</a></p>
+    <p>&copy; 2025 Government Portal. All rights reserved.</p>
+  </footer>
+
+  <script>
+    async function displayMessages() {
+      const res = await fetch('/api/complaints');
+      const messages = await res.json();
+      const container = document.getElementById('message-container');
+  
+      messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.className = 'message';
+        div.innerHTML = `
+          <p>${msg.body}</p>
+          <p class="timestamp">Received at: ${msg.timestamp}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+  
+    displayMessages();
+  </script>
+</body>
+</html>

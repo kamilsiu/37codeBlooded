@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Portal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #004080;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        header .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #ffcc00;
+        }
+
+        main {
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        main h1 {
+            color: #004080;
+            font-size: 2.5em;
+        }
+
+        main p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .content-section {
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        .content-section h2 {
+            color: #004080;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .content-section p {
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        /* Chatbot Taskbar Styles */
+        .chatbot-taskbar {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 600px;
+            background-color: #004080;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            z-index: 1000;
+            transition: bottom 0.5s ease;
+        }
+
+        .chatbot-taskbar input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            font-size: 1em;
+            margin-right: 10px;
+        }
+
+        .chatbot-taskbar input::placeholder {
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .chatbot-taskbar button {
+            background-color: #ffcc00;
+            color: #004080;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .chatbot-taskbar button:hover {
+            background-color: #e6b800;
+        }
+
+        /* Agent Popup Styles */
+        .agent-popup {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background-color: white;
+            color: #333;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            width: 300px;
+            z-index: 1100;
+            display: none;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .agent-popup h3 {
+            margin-top: 0;
+            color: #004080;
+        }
+
+        .agent-popup button {
+            background-color: #ffcc00;
+            color: #004080;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .agent-popup button:hover {
+            background-color: #e6b800;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Government Portal</div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/resolved">Resolved</a>
+            <a href="/emails">Emails</a>
+            <a href="#status">Status</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Welcome to the Government Portal</h1>
+        <p>Your one-stop destination for accessing government services and information.</p>
+
+        <div class="content-section">
+            <h2>About Us</h2>
+            <p>Welcome to civilpal, your one-step stop for all things government-related.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Issues Resolved</h2>
+            <p>Report and track issues related to public services, infrastructure, and more. We are committed to resolving your concerns promptly.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Status</h2>
+            <p>Check the status of your requests, applications, or complaints. Stay informed about the progress of your submissions.</p>
+        </div>
+    </main>
+
+    <!-- Chatbot Taskbar -->
+    <div class="chatbot-taskbar" id="chatbot-taskbar">
+        <input type="text" id="chatbot-input" placeholder="Enter your constituency...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <!-- Agent Popup -->
+    <div class="agent-popup" id="agent-popup">
+        <h3>Constituency Summary</h3>
+        <p><strong>📍 Area:</strong> <span id="popup-area">---</span></p>
+        <p><strong>📩 Complaints:</strong> 142</p>
+        <p><strong>📌 Localities Reporting:</strong> Gandhi Nagar, MG Layout</p>
+        <p><strong>🏢 Departments Notified:</strong> BWSSB, BESCOM, BBMP</p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        // Scroll-triggered chatbot taskbar
+        window.addEventListener('scroll', () => {
+            const chatbotTaskbar = document.getElementById('chatbot-taskbar');
+            const scrollPosition = window.scrollY;
+
+            if (scrollPosition > 50) {
+                chatbotTaskbar.style.bottom = '20px';
+            } else {
+                chatbotTaskbar.style.bottom = '-100px';
+            }
+        });
+
+        function sendMessage() {
+            const input = document.getElementById('chatbot-input');
+            const constituency = input.value.trim();
+
+            if (constituency !== "") {
+                input.value = "";
+
+                // Show agent popup with updated data
+                const popup = document.getElementById('agent-popup');
+                document.getElementById('popup-area').textContent = constituency;
+                popup.style.display = 'block';
+            } else {
+                alert("Please enter your constituency.");
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('agent-popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
