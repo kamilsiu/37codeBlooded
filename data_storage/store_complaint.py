@@ -4,43 +4,32 @@ from datetime import datetime
 
 COMPLAINTS_FILE = os.path.join(os.path.dirname(__file__), 'complaints.json')
 
-def store_complaint(subject, body, result):
-    """
-    Stores the processed complaint as a new entry in complaints.json
-    """
-    entry = {
-        "timestamp": datetime.now().isoformat(),
-        "subject": subject,
-        "body": body,
-        "category": result.get("category", "Unknown"),
-        "constituency": result.get("constituency", "Unknown"),
-        "department": result.get("department", "Unassigned"),
-        "confidence": result.get("confidence", 0.0),
-        "status": "unresolved"
+def store_complaint(subject, body, extracted):
+    # Load existing complaints
+    complaints = get_all_complaints()
+    
+    # Create new complaint
+    complaint = {
+        'subject': subject,
+        'body': body,
+        'category': extracted.get('category', 'Unknown'),
+        'constituency': extracted.get('constituency', 'Unknown'),
+        'department': extracted.get('department', 'Unassigned'),
+        'confidence': extracted.get('confidence', 0.9),
+        'status': 'unresolved',
+        'filed_date': datetime.utcnow().isoformat() + 'Z',
+        'resolved_date': None
     }
-
-    if os.path.exists(COMPLAINTS_FILE):
-        with open(COMPLAINTS_FILE, "r") as f:
-            data = json.load(f)
-    else:
-        data = []
-
-    data.append(entry)
-
-    with open(COMPLAINTS_FILE, "w") as f:
-        json.dump(data, f, indent=4)
-
-    print("✅ Complaint stored successfully.")
+    
+    complaints.append(complaint)
+    
+    # Save to file
+    with open(COMPLAINTS_FILE, 'w') as f:
+        json.dump(complaints, f, indent=2)
 
 def get_all_complaints():
-    """
-    Loads and returns all complaints from complaints.json
-    """
     if not os.path.exists(COMPLAINTS_FILE):
         return []
-
-    with open(COMPLAINTS_FILE, "r") as f:
-        try:
-            return json.load(f)
-        except json.JSONDecodeError:
-            return []
+    
+    with open(COMPLAINTS_FILE, 'r') as f:
+        return json.load(f)

@@ -1,144 +1,739 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Issues Resolved</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resolved Issues | Civic Pal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
+    :root {
+      --primary: #004080;
+      --secondary: #ffcc00;
+      --accent: #00f798;
+      --light-bg: #f0f7ff;
+      --card-bg: #ffffff;
+      --text-dark: #333333;
+      --text-light: #666666;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f9;
-      color: #333;
+      background-color: #f5f9ff;
+      color: var(--text-dark);
+      line-height: 1.6;
     }
 
     header {
-      background-color: #004080;
+      background-color: var(--primary);
       color: white;
-      padding: 15px 20px;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     .logo {
-      font-size: 1.5em;
-      font-weight: bold;
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo i {
+      color: var(--secondary);
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      margin: 0 15px;
-      font-size: 1em;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: #ffcc00;
-    }
-
-    main {
-      max-width: 960px;
-      margin: 40px auto;
-      padding: 0 20px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 2.5em;
-      color: #004080;
-      margin-bottom: 40px;
-    }
-
-    .content-section {
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 40px;
-      align-items: flex-start;
-      text-align: left;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .content-section > div {
-      flex: 1;
-      min-width: 280px;
+    nav a:hover, nav a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: var(--accent);
+      transform: translateY(-2px);
     }
 
-    h2, h3 {
-      font-size: 1.4rem;
-      margin-bottom: 12px;
-      color: #004080;
-    }
-
-    ul {
-      list-style-type: disc;
-      padding-left: 20px;
-      color: #555;
-    }
-
-    .speedometer-container {
+    .page-header {
+      background: linear-gradient(135deg, var(--primary) 0%, #0066cc 100%);
+      color: white;
+      padding: 4rem 2rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    .speedometer {
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      max-width: 250px;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    .page-header-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
       margin: 0 auto;
     }
 
-    .speedometer svg {
-      width: 100%;
-      height: auto;
+    .page-header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
     }
 
-    .needle {
-      transform-origin: 50% 50%;
-      transform: rotate(45deg);
-      transition: transform 0.5s ease;
+    .page-header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .stats-overview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+
+    .stat-card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+      text-align: center;
+      border-top: 4px solid var(--primary);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-icon {
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0.5rem 0;
+    }
+
+    .stat-label {
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+
+    .progress-gauge {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      margin: 3rem 0;
+      text-align: center;
+    }
+
+    .gauge-header {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+
+    .gauge-container {
+      max-width: 300px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .gauge {
+      width: 100%;
+    }
+
+    .gauge-needle {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: translateX(-50%) rotate(45deg);
+      width: 4px;
+      height: 40%;
+      background-color: var(--primary);
+      border-radius: 4px;
+      transition: transform 1s ease;
+      z-index: 2;
+    }
+
+    .gauge-labels {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 10%;
+      margin-top: 0.5rem;
+      color: var(--text-light);
+    }
+
+    .gauge-summary {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      color: var(--text-dark);
+    }
+
+    .gauge-summary strong {
+      color: var(--primary);
+    }
+
+    .issues-section {
+      margin: 4rem 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .issues-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .issue-card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid var(--primary);
+      transition: transform 0.3s ease;
+    }
+
+    .issue-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .issue-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .issue-icon {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .issue-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .issue-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-light);
+    }
+
+    .department-performance {
+      background-color: var(--primary);
+      color: white;
+      padding: 3rem 2rem;
+      border-radius: 10px;
+      margin: 4rem 0;
+    }
+
+    .performance-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .performance-header h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .department-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .department-card {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .department-card:hover {
+      transform: translateY(-5px);
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .department-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: var(--secondary);
+      border-radius: 4px;
+    }
+
+    footer {
+      background-color: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 3rem 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--secondary);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .social-links a {
+      color: white;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--secondary);
+    }
+
+    .chatbot-taskbar {
+      position: fixed;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 600px;
+      background-color: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 1.2rem;
+      border-radius: 50px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      transition: bottom 0.5s ease;
+    }
+
+    .chatbot-taskbar input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: none;
+      border-radius: 25px;
+      outline: none;
+      font-size: 1rem;
+      margin-right: 0.8rem;
+    }
+
+    .chatbot-taskbar button {
+      background-color: var(--secondary);
+      color: var(--primary);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .chatbot-taskbar button:hover {
+      background-color: #e6b800;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      nav {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .page-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .page-header p {
+        font-size: 1rem;
+      }
+
+      .issues-grid, .department-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header {
+        padding: 3rem 1rem;
+      }
+
+      .page-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .stats-overview {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">Government Portal</div>
+    <div class="logo">
+      <i class="fas fa-landmark"></i>
+      <span>Civic Pal</span>
+    </div>
     <nav>
-      <a href="/">Home</a>
-      <a href="/resolved">Resolved</a>
-      <a href="/emails">Emails</a>
-      <a href="#status">Status</a>
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/resolved" class="active"><i class="fas fa-check-circle"></i> Resolved</a>
+      <a href="/emails"><i class="fas fa-envelope"></i> Emails</a>
+      <a href="#status"><i class="fas fa-chart-line"></i> Status</a>
     </nav>
   </header>
 
-  <main>
-    <h1>Issues Resolved</h1>
-    <div class="content-section">
-      <div>
-        <h2>Major Problems Faced</h2>
-        <ul>
-          <li>Road infrastructure issues</li>
-          <li>Water supply disruptions</li>
-          <li>Electricity outages</li>
-          <li>Healthcare accessibility</li>
-          <li>Public transportation delays</li>
-        </ul>
-      </div>
+  <div class="page-header">
+    <div class="page-header-content">
+      <h1>Resolved Issues</h1>
+      <p>See how your reports are making a difference in our community</p>
+    </div>
+  </div>
 
-      <div class="speedometer-container">
-        <h3>Resolution Progress</h3>
-        <div class="speedometer">
-          <svg viewBox="0 0 100 50">
-            <path d="M10 50 A40 40 0 0 1 90 50" fill="none" stroke="#e0e0e0" stroke-width="10"/>
-            <path d="M10 50 A40 40 0 0 1 40 20" fill="none" stroke="#E74C3C" stroke-width="10"/>
-            <path d="M40 20 A40 40 0 0 1 60 20" fill="none" stroke="#F39C12" stroke-width="10"/>
-            <path d="M60 20 A40 40 0 0 1 90 50" fill="none" stroke="#2ECC71" stroke-width="10"/>
-            <line x1="50" y1="50" x2="50" y2="15" stroke="#333" stroke-width="3" class="needle"/>
-          </svg>
+  <main>
+    <div class="stats-overview">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-flag"></i>
         </div>
+        <div class="stat-value" id="total-reported">--</div>
+        <div class="stat-label">Total Issues Reported</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-check-double"></i>
+        </div>
+        <div class="stat-value" id="total-resolved">--</div>
+        <div class="stat-label">Issues Resolved</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-clock"></i>
+        </div>
+        <div class="stat-value" id="avg-resolution">--</div>
+        <div class="stat-label">Avg. Resolution Days</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-smile"></i>
+        </div>
+        <div class="stat-value" id="satisfaction-rate">--</div>
+        <div class="stat-label">Satisfaction Rate</div>
+      </div>
+    </div>
+
+    <div class="progress-gauge">
+      <h2 class="gauge-header">
+        <i class="fas fa-tachometer-alt"></i>
+        Current Resolution Performance
+      </h2>
+      <div class="gauge-container">
+        <svg class="gauge" viewBox="0 0 200 100">
+          <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#e0e0e0" stroke-width="12"/>
+          <path d="M20 100 A80 80 0 0 1 60 40" fill="none" stroke="#e74c3c" stroke-width="12"/>
+          <path d="M60 40 A80 80 0 0 1 140 40" fill="none" stroke="#f39c12" stroke-width="12"/>
+          <path d="M140 40 A80 80 0 0 1 180 100" fill="none" stroke="#2ecc71" stroke-width="12"/>
+        </svg>
+        <div class="gauge-needle" id="gauge-needle"></div>
+        <div class="gauge-labels">
+          <span>0%</span>
+          <span>50%</span>
+          <span>100%</span>
+        </div>
+      </div>
+      <p class="gauge-summary">
+        Our current resolution rate is <strong id="resolution-rate">--</strong>
+      </p>
+    </div>
+
+    <div class="issues-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fas fa-list-ul"></i>
+          Recently Resolved Issues
+        </h2>
+      </div>
+      <div class="issues-grid" id="recent-issues">
+        <!-- Will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <div class="issues-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fas fa-exclamation-triangle"></i>
+          Common Problem Areas
+        </h2>
+      </div>
+      <div class="issues-grid" id="common-issues">
+        <!-- Will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <div class="department-performance">
+      <div class="performance-header">
+        <h2>Department Performance</h2>
+        <p>See how different departments are performing in issue resolution</p>
+      </div>
+      <div class="department-grid" id="department-performance">
+        <!-- Will be populated by JavaScript -->
       </div>
     </div>
   </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="logo">
+        <i class="fas fa-landmark"></i>
+        <span>Civic Pal</span>
+      </div>
+      <p>Bridging the gap between citizens and government</p>
+      <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <p>&copy; 2025 Civic Pal. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Chatbot Taskbar -->
+  <div class="chatbot-taskbar" id="chatbot-taskbar">
+    <input type="text" id="chatbot-input" placeholder="Ask about resolved issues in your area...">
+    <button onclick="sendMessage()">
+      <i class="fas fa-paper-plane"></i>
+      Send
+    </button>
+  </div>
+
+  <script>
+      async function fetchIssueStats() {
+    try {
+      const response = await fetch("http://localhost:5000/api/issues/summary");
+      const data = await response.json();
+      document.getElementById("total-issues").textContent = data.total_issues_reported;
+    } catch (err) {
+      console.error("Failed to fetch issue stats:", err);
+      document.getElementById("total-issues").textContent = "Unavailable";
+    }
+  }
+
+  fetchIssueStats();
+  setInterval(fetchIssueStats, 30000);
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    // Show loading states
+    document.getElementById('recent-issues').innerHTML = `
+      <div class="issue-card">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Loading recent issues...</p>
+      </div>
+    `;
+    
+    document.getElementById('common-issues').innerHTML = `
+      <div class="issue-card">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Loading common issues...</p>
+      </div>
+    `;
+    
+    document.getElementById('department-performance').innerHTML = `
+      <div class="department-card">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Loading department data...</p>
+      </div>
+    `;
+
+    // Load stats data
+    const statsResponse = await fetch('/api/resolved/stats');
+    if (!statsResponse.ok) throw new Error('Failed to load stats');
+    const stats = await statsResponse.json();
+    
+    // Update stats cards
+    document.getElementById('total-reported').textContent = stats.total_reported || 0;
+    document.getElementById('total-resolved').textContent = stats.total_resolved || 0;
+    document.getElementById('avg-resolution').textContent = stats.avg_resolution_days || 'N/A';
+    document.getElementById('satisfaction-rate').textContent = stats.satisfaction_rate ? `${stats.satisfaction_rate}%` : 'N/A';
+    document.getElementById('resolution-rate').textContent = stats.resolution_rate ? `${stats.resolution_rate}%` : '0%';
+    
+    // Update gauge needle position
+    const needle = document.getElementById('gauge-needle');
+    const angle = -90 + ((stats.resolution_rate || 0) * 1.8);
+    needle.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+
+    // Load categories for issues
+    const categoriesResponse = await fetch('/api/resolved/categories');
+    if (!categoriesResponse.ok) throw new Error('Failed to load categories');
+    const categories = await categoriesResponse.json();
+    
+    if (categories && categories.length > 0) {
+      renderRecentIssues(categories);
+      renderCommonIssues([...categories].sort((a, b) => (b.count || 0) - (a.count || 0)));
+    } else {
+      document.getElementById('recent-issues').innerHTML = `
+        <div class="issue-card">
+          <p>No resolved issues found</p>
+        </div>
+      `;
+      document.getElementById('common-issues').innerHTML = `
+        <div class="issue-card">
+          <p>No common issues data available</p>
+        </div>
+      `;
+    }
+
+    // Load department performance
+    const deptResponse = await fetch('/api/resolved/departments');
+    if (!deptResponse.ok) throw new Error('Failed to load departments');
+    const departments = await deptResponse.json();
+    
+    if (departments && departments.length > 0) {
+      renderDepartmentPerformance(departments);
+    } else {
+      document.getElementById('department-performance').innerHTML = `
+        <div class="department-card">
+          <p>No department data available</p>
+        </div>
+      `;
+    }
+
+    // Show chatbot after delay
+    setTimeout(() => {
+      document.getElementById('chatbot-taskbar').style.bottom = '20px';
+    }, 1500);
+
+  } catch (error) {
+    console.error('Error loading data:', error);
+    showErrorMessages();
+  }
+});
+  </script>
 </body>
 </html>

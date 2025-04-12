@@ -9,23 +9,29 @@ from collections import defaultdict
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Add import path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from data_storage.store_complaint import store_complaint, get_all_complaints
 
 # Email login for IMAP and SMTP
-EMAIL = "civicpalo1@gmail.com"
-PASSWORD = "rbit dlck xznx qbsp"
+EMAIL = os.getenv('EMAIL', "civicpalo1@gmail.com")
+PASSWORD = os.getenv('EMAIL_PASSWORD', "rbit dlck xznx qbsp")
 IMAP_SERVER = "imap.gmail.com"
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 THRESHOLD = 5  # Complaints per constituency
 
 def clean(text):
+    """Remove non-alphanumeric characters, preserving spaces."""
     return re.sub(r'\W+', ' ', text)
 
 def extract_complaint_details(subject, body):
+    """Extract complaint details from email subject and body."""
     category_keywords = {
         "water": "Water",
         "electricity": "Electricity",
@@ -66,13 +72,14 @@ def extract_complaint_details(subject, body):
     return subject.strip(), body.strip(), result
 
 def send_constituency_alert(constituency, complaints):
+    """Send an alert email for a constituency with multiple complaints."""
     subject = f"🚨 Alert: {len(complaints)} Complaints from {constituency}"
-    body_lines = [f"🔸 {c.get('subject', '')} — {c.get('category', '')}" for c in complaints]
+    body_lines = [f"🔸 {c.get('subject', 'No Subject')} — {c.get('category', 'Unknown')}" for c in complaints]
     body = (
         f"Hello,\n\n"
         f"The following {len(complaints)} complaints have been received from {constituency}:\n\n"
         + "\n".join(body_lines) +
-        "\n\nPlease take appropriate action.\n\nRegards,\nCivic Portal - QuantumX"
+        "\n\nPlease take appropriate action.\n\nRegards,\nCivic Pal"
     )
 
     msg = MIMEMultipart()
@@ -86,46 +93,71 @@ def send_constituency_alert(constituency, complaints):
             server.starttls()
             server.login(EMAIL, PASSWORD)
             server.sendmail(EMAIL, EMAIL, msg.as_string())
-            print(f"✅ Sent alert email for {constituency} ({len(complaints)} complaints)")
+            logging.info(f"Sent alert email for {constituency} ({len(complaints)} complaints)")
     except Exception as e:
-        print(f"❌ Failed to send alert: {e}")
+        logging.error(f"Failed to send alert for {constituency}: {e}")
 
 def fetch_unread_emails():
-    print("📥 Connecting to Gmail...")
-    mail = imaplib.IMAP4_SSL(IMAP_SERVER)
-    mail.login(EMAIL, PASSWORD)
-    mail.select("inbox")
+    """Fetch unread emails and process them as complaints."""
+    logging.info("Connecting to Gmail...")
+    try:
+        mail = imaplib.IMAP4_SSL(IMAP_SERVER)
+        mail.login(EMAIL, PASSWORD)
+        mail.select("inbox")
+    except Exception as e:
+        logging.error(f"Failed to connect to Gmail: {e}")
+        return
 
-    status, messages = mail.search(None, '(UNSEEN)')
-    email_ids = messages[0].split()
-    print(f"🔍 Found {len(email_ids)} unread email(s).")
+    try:
+        status, messages = mail.search(None, '(UNSEEN)')
+        email_ids = messages[0].split()
+        logging.info(f"Found {len(email_ids)} unread email(s).")
+    except Exception as e:
+        logging.error(f"Failed to search emails: {e}")
+        mail.logout()
+        return
 
     for eid in email_ids:
-        _, msg_data = mail.fetch(eid, "(RFC822)")
-        for response_part in msg_data:
-            if isinstance(response_part, tuple):
-                msg = email.message_from_bytes(response_part[1])
-                subject, encoding = decode_header(msg["Subject"])[0]
-                if isinstance(subject, bytes):
-                    subject = subject.decode(encoding if encoding else "utf-8")
+        try:
+            _, msg_data = mail.fetch(eid, "(RFC822)")
+            for response_part in msg_data:
+                if isinstance(response_part, tuple):
+                    msg = email.message_from_bytes(response_part[1])
+                    subject, encoding = decode_header(msg["Subject"])[0]
+                    if isinstance(subject, bytes):
+                        try:
+                            subject = subject.decode(encoding if encoding else "utf-8")
+                        except Exception as e:
+                            logging.warning(f"Failed to decode subject: {e}")
+                            subject = "No Subject"
 
-                if msg.is_multipart():
-                    for part in msg.walk():
-                        content_type = part.get_content_type()
-                        content_disposition = str(part.get("Content-Disposition"))
-                        if content_type == "text/plain" and "attachment" not in content_disposition:
-                            body = part.get_payload(decode=True).decode()
-                            break
-                else:
-                    body = msg.get_payload(decode=True).decode()
+                    if msg.is_multipart():
+                        for part in msg.walk():
+                            content_type = part.get_content_type()
+                            content_disposition = str(part.get("Content-Disposition"))
+                            if content_type == "text/plain" and "attachment" not in content_disposition:
+                                try:
+                                    body = part.get_payload(decode=True).decode()
+                                    break
+                                except Exception as e:
+                                    logging.warning(f"Failed to decode body: {e}")
+                                    body = "No Content"
+                    else:
+                        try:
+                            body = msg.get_payload(decode=True).decode()
+                        except Exception as e:
+                            logging.warning(f"Failed to decode body: {e}")
+                            body = "No Content"
 
-                print(f"📨 Processing email: {subject}")
-                subject_clean, body_clean, extracted = extract_complaint_details(subject, body)
-                store_complaint(subject_clean, body_clean, extracted)
+                    logging.info(f"Processing email: {subject}")
+                    subject_clean, body_clean, extracted = extract_complaint_details(subject, body)
+                    store_complaint(subject_clean, body_clean, extracted)
+        except Exception as e:
+            logging.error(f"Failed to process email ID {eid}: {e}")
 
     mail.logout()
 
-    # After storing, re-load complaints and check threshold
+    # Check threshold and send alerts
     complaints = get_all_complaints()
     constituency_map = defaultdict(list)
     for c in complaints:

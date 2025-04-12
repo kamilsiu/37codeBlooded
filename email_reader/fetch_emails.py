@@ -20,7 +20,6 @@ def clean(text):
     return re.sub(r'\W+', ' ', text)
 
 def extract_complaint_details(subject, body):
-    # Basic dummy NLP extraction (can be upgraded)
     category_keywords = {
         "water": "Water",
         "electricity": "Electricity",
@@ -55,7 +54,7 @@ def extract_complaint_details(subject, body):
         "category": category,
         "constituency": constituency,
         "department": department,
-        "confidence": 0.9  # Static for now
+        "confidence": 0.9
     }
 
     return subject.strip(), body.strip(), result

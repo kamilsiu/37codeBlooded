@@ -1,373 +1,727 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Government Portal</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Civic Pal - Government Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #004080;
+      --secondary: #ffcc00;
+      --accent: #00f798;
+      --light-bg: #f0f7ff;
+      --card-bg: #ffffff;
+      --text-dark: #333333;
+      --text-light: #666666;
+    }
 
-        header {
-            background-color: #004080;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        header .logo {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f9ff;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
 
-        header nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 1em;
-            transition: color 0.3s;
-        }
+    /* Header Styles */
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
-        header nav a:hover {
-            color: #ffcc00;
-        }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-        main {
-            padding: 20px;
-            margin-top: 20px;
-            text-align: center;
-            margin-bottom: 100px;
-        }
+    .logo i {
+      color: var(--secondary);
+    }
 
-        main h1 {
-            color: #004080;
-            font-size: 2.5em;
-        }
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
 
-        main p {
-            font-size: 1.2em;
-            line-height: 1.6;
-            margin: 20px 0;
-        }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-        .content-section {
-            margin: 40px auto;
-            max-width: 800px;
-            text-align: left;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+    nav a:hover, nav a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
 
-        .content-section h2 {
-            color: #004080;
-            font-size: 1.8em;
-            margin-bottom: 10px;
-            border-bottom: 2px solid #004080;
-            padding-bottom: 5px;
-        }
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #0066cc 100%);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .content-section p {
-            font-size: 1em;
-            line-height: 1.6;
-        }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80') center/cover;
+      opacity: 0.15;
+      z-index: 0;
+    }
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
-        .service-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
 
-        .service-card:hover {
-            transform: translateY(-5px);
-        }
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
 
-        .service-card h3 {
-            color: #004080;
-            margin-top: 0;
-        }
+    .cta-button {
+      display: inline-block;
+      background-color: var(--secondary);
+      color: var(--primary);
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 2px solid var(--secondary);
+    }
 
-        /* Chatbot Taskbar Styles */
-        .chatbot-taskbar {
-            position: fixed;
-            bottom: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            max-width: 600px;
-            background-color: #004080;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            z-index: 1000;
-            transition: bottom 0.5s ease;
-        }
+    .cta-button:hover {
+      background-color: transparent;
+      color: var(--secondary);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
 
-        .chatbot-taskbar input {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            outline: none;
-            font-size: 1em;
-            margin-right: 10px;
-        }
+    /* Main Content */
+    main {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
 
-        .chatbot-taskbar input::placeholder {
-            color: #aaa;
-            font-style: italic;
-        }
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
 
-        .chatbot-taskbar button {
-            background-color: #ffcc00;
-            color: #004080;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1em;
-        }
+    .section-title h2 {
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
 
-        .chatbot-taskbar button:hover {
-            background-color: #e6b800;
-        }
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background-color: var(--secondary);
+      border-radius: 2px;
+    }
 
-        /* Agent Popup Styles */
-        .agent-popup {
-            position: fixed;
-            bottom: 120px;
-            right: 20px;
-            background-color: white;
-            color: #333;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            width: 300px;
-            z-index: 1100;
-            display: none;
-            animation: fadeInUp 0.4s ease;
-        }
+    .section-title p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      max-width: 700px;
+      margin: 0 auto;
+    }
 
-        /* Mobile-specific styles */
-        @media (max-width: 768px) {
-            .agent-popup {
-                width: 90%;
-                max-width: 300px;
-                right: auto;
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: 120px;
-            }
-            
-            .chatbot-taskbar {
-                width: 90%;
-            }
-        }
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
 
-        .agent-popup h3 {
-            margin-top: 0;
-            color: #004080;
-        }
+    .feature-card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      border-top: 4px solid var(--primary);
+    }
 
-        .agent-popup button {
-            background-color: #ffcc00;
-            color: #004080;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            width: 100%;
-        }
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
 
-        .agent-popup button:hover {
-            background-color: #e6b800;
-        }
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
 
-        footer {
-            background-color: #004080;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-        }
-    </style>
+    /* Stats Section */
+    .stats-section {
+      background-color: var(--primary);
+      color: white;
+      padding: 4rem 2rem;
+      margin: 4rem 0;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .stat-item {
+      padding: 1.5rem;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--secondary);
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      margin: 4rem 0;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 1rem;
+      left: 1.5rem;
+      font-size: 4rem;
+      color: rgba(0, 64, 128, 0.1);
+      font-family: serif;
+      line-height: 1;
+    }
+
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--light-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .author-info h4 {
+      color: var(--primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .author-info p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 3rem 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--secondary);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .social-links a {
+      color: white;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--secondary);
+    }
+
+    /* Chatbot */
+    .chatbot-taskbar {
+      position: fixed;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 600px;
+      background-color: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 1.2rem;
+      border-radius: 50px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      transition: bottom 0.5s ease;
+    }
+
+    .chatbot-taskbar input {
+      flex: 1;
+      padding: 0.8rem 1rem;
+      border: none;
+      border-radius: 25px;
+      outline: none;
+      font-size: 1rem;
+      margin-right: 0.8rem;
+    }
+
+    .chatbot-taskbar button {
+      background-color: var(--secondary);
+      color: var(--primary);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .chatbot-taskbar button:hover {
+      background-color: #e6b800;
+    }
+
+    /* Agent Popup */
+    .agent-popup {
+        display: none;
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        width: 300px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        padding: 1.5rem;
+        z-index: 1001;
+    }
+    
+    .agent-popup h3 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+    }
+    
+    .agent-popup p {
+        margin-bottom: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .agent-popup button {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 1rem;
+        width: 100%;
+    }
+    
+    .agent-popup button:hover {
+        background-color: #003366;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      nav {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .section-title h2 {
+        font-size: 1.8rem;
+      }
+
+      .agent-popup {
+          width: calc(100% - 40px);
+          right: 20px;
+          left: 20px;
+          bottom: 80px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 3rem 1rem;
+      }
+
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .features-grid, .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chatbot-taskbar {
+        flex-direction: column;
+        border-radius: 15px;
+        padding: 1rem;
+      }
+
+      .chatbot-taskbar input {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 0.8rem;
+      }
+
+      .chatbot-taskbar button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="logo">Government Portal</div>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/resolved">Resolved</a>
-            <a href="/emails">Emails</a>
-            <a href="#status">Status</a>
-        </nav>
-    </header>
+  <header>
+    <div class="logo">
+      <i class="fas fa-landmark"></i>
+      <span>Civic Pal</span>
+    </div>
+    <nav>
+      <a href="/" class="active"><i class="fas fa-home"></i> Home</a>
+      <a href="/resolved"><i class="fas fa-check-circle"></i> Resolved</a>
+      <a href="/emails"><i class="fas fa-envelope"></i> Emails</a>
+      <a href="#status"><i class="fas fa-chart-line"></i> Status</a>
+    </nav>
+  </header>
 
-    <main>
-        <h1>Welcome to the Government Portal</h1>
-        <p>Your one-stop destination for accessing government services and information.</p>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Your Voice Matters in Community Development</h1>
+      <p>Civic Pal connects citizens with local government to report issues, track resolutions, and access services efficiently.</p>
+      <a href="/resolved" class="cta-button">View Resolved Issues</a>
+    </div>
+  </section>
 
-        <div class="content-section">
-            <h2>About Us</h2>
-            <p>Welcome to civilpal, your one-step stop for all things government-related. Our platform connects citizens with government services, making it easier to report issues, track resolutions, and access important information.</p>
-            <p>We are committed to transparency, efficiency, and citizen engagement in government operations. Our portal serves as a bridge between the public and various government departments.</p>
+  <main>
+    <div class="section-title">
+      <h2>Our Services</h2>
+      <p>Discover how Civic Pal makes civic engagement simple and effective for everyone</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-bullhorn"></i>
         </div>
+        <h3>Issue Reporting</h3>
+        <p>Report community problems with just a few taps. Our system automatically routes your concern to the right department.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-search"></i>
+        </div>
+        <h3>Real-time Tracking</h3>
+        <p>Follow your reported issues from submission to resolution with live updates and status notifications.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <h3>Document Access</h3>
+        <p>Find all government forms, applications, and public records in one convenient digital location.</p>
+      </div>
+    </div>
 
-        <div class="content-section">
-            <h2>Our Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Issue Reporting</h3>
-                    <p>Report problems in your area including infrastructure issues, public service complaints, and more.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Application Tracking</h3>
-                    <p>Track the status of your government applications and requests in real-time.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Document Access</h3>
-                    <p>Access important government documents, forms, and public records.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Service Requests</h3>
-                    <p>Request government services like birth certificates, licenses, and permits.</p>
-                </div>
+    <div class="stats-section">
+      <h2>Our Impact in Numbers</h2>
+      <p>Join thousands of citizens who are already making a difference</p>
+      
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">25K+</div>
+          <div class="stat-label">Active Users</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">18K+</div>
+          <div class="stat-label">Issues Resolved</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">94%</div>
+          <div class="stat-label">Satisfaction Rate</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">3.2</div>
+          <div class="stat-label">Avg. Resolution Days</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <h2>What Citizens Say</h2>
+      <p>Hear from community members who've used Civic Pal to make a difference</p>
+    </div>
+
+    <div class="testimonials">
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-text">I reported a dangerous pothole on my street and it was fixed within 48 hours! Civic Pal made the process so simple and kept me updated throughout.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">RS</div>
+            <div class="author-info">
+              <h4>Rahul Sharma</h4>
+              <p>Resident, MG Layout</p>
             </div>
+          </div>
         </div>
-
-        <div class="content-section">
-            <h2>Issues Resolved</h2>
-            <p>Report and track issues related to public services, infrastructure, and more. We are committed to resolving your concerns promptly.</p>
-            <p>Our system automatically routes your complaints to the appropriate department and provides real-time updates on resolution progress. You can view statistics on resolved issues in your constituency and compare response times across different departments.</p>
+        <div class="testimonial-card">
+          <p class="testimonial-text">As a small business owner, I used Civic Pal to resolve a persistent garbage collection issue. The transparency and speed of resolution impressed me.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">PM</div>
+            <div class="author-info">
+              <h4>Priya Malik</h4>
+              <p>Business Owner, Gandhi Nagar</p>
+            </div>
+          </div>
         </div>
-
-        <div class="content-section">
-            <h2>Status Tracking</h2>
-            <p>Check the status of your requests, applications, or complaints. Stay informed about the progress of your submissions.</p>
-            <p>Our tracking system provides detailed information about each stage of processing, estimated completion times, and contact information for the department handling your case.</p>
+        <div class="testimonial-card">
+          <p class="testimonial-text">The status tracking feature helped me follow up on my water connection application without visiting multiple offices. Saved me so much time!</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">AK</div>
+            <div class="author-info">
+              <h4>Ankit Kumar</h4>
+              <p>Student, Victoria Park</p>
+            </div>
+          </div>
         </div>
-
-        <div class="content-section">
-            <h2>Recent Updates</h2>
-            <p><strong>New Feature:</strong> Now you can receive SMS notifications about your complaint status.</p>
-            <p><strong>Improved:</strong> Faster processing times for birth certificate applications.</p>
-            <p><strong>Announcement:</strong> New municipal offices opening in your area next month.</p>
-        </div>
-
-        <div class="content-section">
-            <h2>Contact Information</h2>
-            <p><strong>Help Desk:</strong> 1800-123-4567 (24/7 service)</p>
-            <p><strong>Email:</strong> support@govportal.gov</p>
-            <p><strong>Office Hours:</strong> Monday to Friday, 9:00 AM to 5:00 PM</p>
-        </div>
-    </main>
-
-    <footer>
-        <p>© 2023 Government Portal. All rights reserved.</p>
-        <p>Designed for citizen convenience and government transparency</p>
-    </footer>
-
-    <!-- Chatbot Taskbar -->
-    <div class="chatbot-taskbar" id="chatbot-taskbar">
-        <input type="text" id="chatbot-input" placeholder="Enter your constituency...">
-        <button onclick="sendMessage()">Send</button>
+      </div>
     </div>
+  </main>
 
-    <!-- Agent Popup -->
-    <div class="agent-popup" id="agent-popup">
-        <h3>Constituency Summary</h3>
-        <p><strong>📍 Area:</strong> <span id="popup-area">---</span></p>
-        <p><strong>📩 Complaints:</strong> 142</p>
-        <p><strong>📌 Localities Reporting:</strong> Gandhi Nagar, MG Layout</p>
-        <p><strong>🏢 Departments Notified:</strong> BWSSB, BESCOM, BBMP</p>
-        <button onclick="closePopup()">Close</button>
+  <footer>
+    <div class="footer-content">
+      <div class="logo">
+        <i class="fas fa-landmark"></i>
+        <span>Civic Pal</span>
+      </div>
+      <p>Bridging the gap between citizens and government</p>
+      <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <p>&copy; 2025 Civic Pal. All rights reserved.</p>
     </div>
+  </footer>
 
-    <script>
-        // Show taskbar immediately for testing (you can remove this later)
-        document.getElementById('chatbot-taskbar').style.bottom = '20px';
+  <!-- Chatbot Taskbar -->
+  <div class="chatbot-taskbar" id="chatbot-taskbar">
+    <input type="text" id="chatbot-input" placeholder="Ask about services or report an issue...">
+    <button onclick="sendMessage()">
+      <i class="fas fa-paper-plane"></i>
+      Send
+    </button>
+  </div>
+
+  <!-- Agent Popup -->
+  <div class="agent-popup" id="agent-popup">
+    <h3>Constituency Summary</h3>
+    <p><strong>📍 Area:</strong> <span id="popup-area">---</span></p>
+    <p><strong>📩 Complaints:</strong> 142</p>
+    <p><strong>📌 Localities Reporting:</strong> Gandhi Nagar, MG Layout</p>
+    <p><strong>🏢 Departments Notified:</strong> BWSSB, BESCOM, BBMP</p>
+    <button onclick="closePopup()">Close</button>
+  </div>
+
+  <script>
+    // Chatbot functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const chatbot = document.getElementById('chatbot-taskbar');
+      const popup = document.getElementById('agent-popup');
+      
+      // Show after slight delay
+      setTimeout(() => {
+        chatbot.style.bottom = '20px';
+      }, 1500);
+
+      // Close popup when clicking outside
+      function closePopupOutside(event) {
+        if (!popup.contains(event.target) && !chatbot.contains(event.target)) {
+          popup.style.display = 'none';
+          document.removeEventListener('click', closePopupOutside);
+        }
+      }
+
+      window.closePopup = function() {
+        popup.style.display = 'none';
+        document.removeEventListener('click', closePopupOutside);
+      }
+
+      // Scroll-triggered chatbot taskbar
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+          chatbot.style.bottom = '20px';
+        } else {
+          chatbot.style.bottom = '-100px';
+        }
+      });
+
+      window.sendMessage = function() {
+        const input = document.getElementById('chatbot-input');
+        const message = input.value.trim();
         
-        // Scroll-triggered chatbot taskbar
-        window.addEventListener('scroll', () => {
-            const chatbotTaskbar = document.getElementById('chatbot-taskbar');
-            const scrollPosition = window.scrollY;
-
-            if (scrollPosition > 50) {
-                chatbotTaskbar.style.bottom = '20px';
-            } else {
-                chatbotTaskbar.style.bottom = '-100px';
-            }
-        });
-
-        function sendMessage() {
-            const input = document.getElementById('chatbot-input');
-            const constituency = input.value.trim();
-
-            if (constituency !== "") {
-                input.value = "";
-
-                // Show agent popup with updated data
-                const popup = document.getElementById('agent-popup');
-                document.getElementById('popup-area').textContent = constituency;
-                popup.style.display = 'block';
-                
-                // Close popup when clicking outside
-                setTimeout(() => {
-                    document.addEventListener('click', closePopupOutside);
-                }, 100);
-            } else {
-                alert("Please enter your constituency.");
-            }
+        if (message) {
+          // Show agent popup with updated data
+          document.getElementById('popup-area').textContent = message;
+          popup.style.display = 'block';
+          
+          // Close popup when clicking outside
+          setTimeout(() => {
+            document.addEventListener('click', closePopupOutside);
+          }, 100);
+          
+          input.value = "";
+        } else {
+          alert("Please enter your question or concern.");
         }
-
-        function closePopup() {
-            document.getElementById('agent-popup').style.display = 'none';
-            document.removeEventListener('click', closePopupOutside);
-        }
-        
-        function closePopupOutside(e) {
-            const popup = document.getElementById('agent-popup');
-            const taskbar = document.getElementById('chatbot-taskbar');
-            
-            if (!popup.contains(e.target) && !taskbar.contains(e.target)) {
-                closePopup();
-            }
-        }
-    </script>
+      }
+    });
+  </script>
 </body>
 </html>
