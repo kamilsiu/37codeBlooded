@@ -44,17 +44,27 @@ Run the Application:
 python app.py
 ```
 
-**UsageSubmit Complaints:** Open the web interface (via app.py) to submit complaints manually.  
+**Usage Submit Complaints:** Open the web interface (via app.py) to submit complaints manually. 
+
 **Fetch Emails:** Run the email reader to extract complaints automatically:
 python email_reader/fetch_emails.py
+
 **View Complaints:** All complaints are stored in complaints.json for easy tracking.
+
 **Tech Stack:** Python Flask JSON IMAP/SMTPPython: Core language for backend logic and email processing.  
+
 **Flask/Streamlit:** Lightweight web framework for the frontend interface (configurable).  
+
 **JSON:** Persistent storage for complaint data.  
+
 **IMAP/SMTP:** Email integration for automatic complaint fetching.
-**Future Enhancements:** User Authentication: Add secure user accounts for personalized access.  
+
+**Future Enhancements:** User Authentication: Add secure user accounts for personalized access. 
+
 **Admin Dashboard:** Build a centralized interface for tracking and analytics.  
+
 **Municipal API Integration:** Connect to real-time municipal systems for automated updates.
+
 **Contributing:** Contributions are welcome! To get started:Fork the repository.
 
 ## Create a new branch:
