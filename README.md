@@ -70,17 +70,17 @@ python email_reader/fetch_emails.py
 ## Create a new branch:
 ```
 git checkout -b feature/your-feature
-
-Commit your changes:bash
-
-git commit -m 'Add your feature'
-
-Push to the branch:bash
-
-git push origin feature/your-feature
-
-Open a pull request.
 ```
+## Commit your changes:
+```
+git commit -m 'Add your feature'
+```
+## Push to the branch:
+```
+git push origin feature/your-feature
+```
+Open a pull request.
+
 For major changes, please open an issue first to discuss your ideas. LicenseThis project is licensed under the MIT License (LICENSE). Connect With Me<p align="center">
   <a href="https://github.com/kamilsiu"><img src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
   <a href="https://www.linkedin.com/in/kamil-nissar-348145252/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin" alt="LinkedIn"></a>
