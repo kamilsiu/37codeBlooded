@@ -16,3 +16,64 @@
 ---
 
 ## 📁 Project Structure
+```
+civic-pal/
+│
+├── app.py                   # Frontend interface for complaint submission
+├── complaints.json          # JSON storage for all complaints
+├── store_complaints.py      # Script to save complaint data
+│
+└── email_reader/
+    └── fetch_emails.py      # Reads unread emails and logs complaints
+```
+---
+
+## ⚙️ Installation & Setup
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/your-username/civic-pal.git
+   cd civic-pal
+
+Install Dependencies:bash
+
+pip install -r requirements.txt
+
+Run the Application:bash
+
+python app.py
+
+ UsageSubmit Complaints: Open the web interface (via app.py) to submit new complaints manually.
+Fetch Emails: Run the email reader to automatically extract complaints:bash
+
+python email_reader/fetch_emails.py
+
+View Complaints: All complaints are stored in complaints.json for easy tracking.
+
+ Tech StackPython Flask JSON IMAP/SMTPPython: Core language for backend logic and email processing.  
+Flask/Streamlit: Lightweight web framework for the frontend interface (configurable based on setup).  
+JSON: Persistent storage for complaint data.  
+IMAP/SMTP: Email integration for automatic complaint fetching.
+
+ Future Enhancements User Authentication: Add secure user accounts for personalized access.  
+ Admin Dashboard: Build a centralized interface for complaint tracking and analytics.  
+ Municipal API Integration: Connect to real-time municipal systems for automated updates.
+
+ ContributingContributions are welcome! To get started:Fork the repository.
+Create a new branch (git checkout -b feature/your-feature).
+Commit your changes (git commit -m 'Add your feature').
+Push to the branch (git push origin feature/your-feature).
+Open a pull request.
+
+For major changes, please open an issue first to discuss your ideas. LicenseThis project is licensed under the MIT License (LICENSE). Connect With Me<p align="center">
+  <a href="https://github.com/your-username"><img src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
+  <a href="https://www.linkedin.com/in/your-linkedin/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin" alt="LinkedIn"></a>
+  <a href="mailto:your-email@example.com"><img src="https://img.shields.io/badge/-Email-D14836?style=for-the-badge&logo=gmail" alt="Email"></a>
+</p>
+
+ "Empowering communities through code."
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=your-username&color=blue" alt="Profile Views" />
+</p>
+```
+
