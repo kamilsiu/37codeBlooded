@@ -44,25 +44,21 @@ Run the Application:
 python app.py
 ```
 
-## UsageSubmit Complaints: Open the web interface (via app.py) to submit complaints manually.  
-## Fetch Emails: Run the email reader to extract complaints automatically:bash
-
+**UsageSubmit Complaints:** Open the web interface (via app.py) to submit complaints manually.  
+**Fetch Emails:** Run the email reader to extract complaints automatically:
 python email_reader/fetch_emails.py
+**View Complaints:** All complaints are stored in complaints.json for easy tracking.
+**Tech Stack:** Python Flask JSON IMAP/SMTPPython: Core language for backend logic and email processing.  
+**Flask/Streamlit:** Lightweight web framework for the frontend interface (configurable).  
+**JSON:** Persistent storage for complaint data.  
+**IMAP/SMTP:** Email integration for automatic complaint fetching.
+**Future Enhancements:** User Authentication: Add secure user accounts for personalized access.  
+**Admin Dashboard:** Build a centralized interface for tracking and analytics.  
+**Municipal API Integration:** Connect to real-time municipal systems for automated updates.
+**Contributing:** Contributions are welcome! To get started:Fork the repository.
 
-View Complaints: All complaints are stored in complaints.json for easy tracking.
-
- Tech StackPython Flask JSON IMAP/SMTPPython: Core language for backend logic and email processing.  
-Flask/Streamlit: Lightweight web framework for the frontend interface (configurable).  
-JSON: Persistent storage for complaint data.  
-IMAP/SMTP: Email integration for automatic complaint fetching.
-
- Future EnhancementsUser Authentication: Add secure user accounts for personalized access.  
-Admin Dashboard: Build a centralized interface for tracking and analytics.  
-Municipal API Integration: Connect to real-time municipal systems for automated updates.
-
- ContributingContributions are welcome! To get started:Fork the repository.
-Create a new branch:bash
-
+## Create a new branch:
+```
 git checkout -b feature/your-feature
 
 Commit your changes:bash
@@ -74,7 +70,7 @@ Push to the branch:bash
 git push origin feature/your-feature
 
 Open a pull request.
-
+```
 For major changes, please open an issue first to discuss your ideas. LicenseThis project is licensed under the MIT License (LICENSE). Connect With Me<p align="center">
   <a href="https://github.com/kamilsiu"><img src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
   <a href="https://www.linkedin.com/in/kamil-nissar-348145252/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin" alt="LinkedIn"></a>
