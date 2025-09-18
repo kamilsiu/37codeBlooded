@@ -89,7 +89,7 @@ For major changes, please open an issue first to discuss your ideas. LicenseThis
 
  "Empowering communities through code."
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=your-username&color=blue" alt="Project Views" />
+  <img src="https://komarev.com/ghpvc/?username=kamilsiu&color=41E0E8&label=Repo+Views" alt="Repo Views" />
 </p>
-
+```
 
