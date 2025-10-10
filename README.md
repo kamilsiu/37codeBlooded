@@ -88,8 +88,5 @@ For major changes, please open an issue first to discuss your ideas. LicenseThis
 </p>
 
 
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=kamilsiu&color=41E0E8&label=Repo+Views" alt="Repo Views" />
-</p>
-```
+
 
