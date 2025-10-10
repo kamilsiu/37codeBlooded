@@ -87,7 +87,7 @@ For major changes, please open an issue first to discuss your ideas. LicenseThis
   <a href="mailto:kamilnissarzarga29@gmail.com"><img src="https://img.shields.io/badge/-Email-D14836?style=for-the-badge&logo=gmail" alt="Email"></a>
 </p>
 
- "Empowering communities through code."
+
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=kamilsiu&color=41E0E8&label=Repo+Views" alt="Repo Views" />
 </p>
